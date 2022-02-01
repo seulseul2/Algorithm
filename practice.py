@@ -1,6 +1,12 @@
-A, B, V = map(int, input().split())
+N = int(input())
 
-if (V-A) % (A-B) == 0:
-    print((V-A) // (A-B) + 1)
+result = 0
+while N >= 0:
+    if N % 5 == 0:
+        result += (N//5)
+        print(result)
+        break
+    N -= 3
+    result += 1
 else:
-    print((V-A) // (A-B) + 2)
+    print(-1)
