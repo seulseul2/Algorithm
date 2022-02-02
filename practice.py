@@ -1,12 +1,9 @@
-N = int(input())
-
-result = 0
-while N >= 0:
-    if N % 5 == 0:
-        result += (N//5)
-        print(result)
-        break
-    N -= 3
-    result += 1
-else:
-    print(-1)
+T = int(input())
+for i in range(T):
+    k = int(input())
+    n = int(input())
+    lst = [x for x in range(1, n+1)]
+    for i in range(k):
+        for i in range(1, n):
+            lst[i] += lst[i-1]
+    print(lst[-1])
