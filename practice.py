@@ -1,9 +1,12 @@
-def gcd(x, y):
-    while y:
-        x, y = y, x%y
-    return x
+a, b = map(int, input().split())
+x = list(map(int, input().split()))
+result = 0
+lst = []
 
-n = int(input())
-for i in range(n):
-    x, y = map(int, input().split())
-    print(x*y//gcd(x, y))
+for i in range(len(x)):
+    for j in range(i+1, len(x)):
+        for k in range(j+1, len(x)):
+            result = x[i] + x[j] + x[k]
+            if result <= b:
+                lst.append(result)
+print(max(lst))
