@@ -1,38 +1,20 @@
-import sys
+T = int(input())
 
-n = int(sys.stdin.readline())
+for TC in range(1, T+1):
+    N = int(input())
+    result = {}
+    for i in range(N):
+        A, B = map(int, input().split())
+        for j in range(A, B+1):
+            if j in result.keys():
+                result[j] += 1
+            else:
+                result[j] = 1
+    P = int(input())
 
-queue = []
-
-for i in range(n):
-    x = sys.stdin.readline().split()
-
-    if x[0] == 'push':
-        queue.append(x[1])
-    
-    elif x[0] == 'size':
-        print(len(queue))
-    
-    elif x[0] == 'empty':
-        if len(queue) == 0:
-            print(1)
+    print('#{}' .format(TC), end=' ')
+    for idx in range(1, len(result)+1):
+        if idx == P:
+            print(result.get(idx))
         else:
-            print(0)
-    
-    elif x[0] == 'pop':
-        if len(queue) == 0:
-            print(-1)
-        else:
-            print(queue.pop())
-
-    elif x[0] == 'front':
-        if len(queue) == 0:
-            print(-1)
-        else:
-            print(queue[0])
-
-    elif x[0] == 'back':
-        if len(queue) == 0:
-            print(-1)
-        else:
-            print(queue[-1])
+            print(result.get(idx), end=' ')
