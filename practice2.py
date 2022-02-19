@@ -1,20 +1,10 @@
-T = int(input())
+lst = list(map(int, input().split()))
 
-for TC in range(1, T+1):
-    N = int(input())
-    result = {}
-    for i in range(N):
-        A, B = map(int, input().split())
-        for j in range(A, B+1):
-            if j in result.keys():
-                result[j] += 1
-            else:
-                result[j] = 1
-    P = int(input())
+n = len(lst)
 
-    print('#{}' .format(TC), end=' ')
-    for idx in range(1, len(result)+1):
-        if idx == P:
-            print(result.get(idx))
-        else:
-            print(result.get(idx), end=' ')
+for i in range(1<<n): # 0 ~ 1023까지
+    for j in range(n): # j는 0~9까지
+        if i & (1<<j): # 만약에 0~1023과 1<<j 사이 부분집합이 있다면
+            print(lst[j], end=' ') # j를 출력해라~ 뭐 그런뜻인거같은데 시 팔
+    print()
+print()

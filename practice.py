@@ -1,17 +1,11 @@
-data = [0, 4, 1, 3, 1, 2, 4, 1]
-N = max(data)+1
+arr = [[9, 20, 2, 18, 11], [19, 1, 25, 3, 21] ,[8, 24, 10, 17, 7], [15, 4, 16, 5, 6], [12, 13, 22, 23, 14]]
 
-counts = [0] * N
+I = len(arr)
+J = len(arr[0])
 
-for n in data:
-    counts[n] += 1 # [1, 3, 1, 1, 2]
-
-for i in range(1, N):
-    counts[i] += counts[i-1] # [1, 4, 5, 6, 8]
-
-result = [-1] * len(data) # [-1, -1, -1, -1, -1, -1, -1, -1]
-for i in range(len(data)-1, -1, -1):
-    counts[data[i]] -= 1
-    result[counts[data[i]]] = data[i]
-
-print(result)
+mindata = 100000
+for i in range(I):
+    for j in range(J):
+        if arr[i][j] < mindata:
+            mindata = arr[i][j]
+print(mindata)    
