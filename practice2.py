@@ -1,18 +1,12 @@
-A, B = map(int, input().split())
-cnt = 1
-while B > A:
-    if str(B)[-1] == '1':
-        B = int(str(B)[:-1])
-        cnt += 1
-        continue
-    elif B % 2 == 0:
-        B //= 2
+T = int(input())
+for TC in range(1, T+1):
+    lst = [1, 3]
+    N = int(input())
+    n = N // 10
+    if n < 3:
+        result = lst[n-1]
     else:
-        cnt = -1
-        break
-    cnt += 1
-
-if A != B:
-    cnt = -1
-    
-print(cnt)
+        for i in range(n-2):
+            lst.append(lst[-1]+lst[-2]*2)
+        result = lst[-1]
+    print('#{} {}' .format(TC, result))
