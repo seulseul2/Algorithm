@@ -1,20 +1,11 @@
-N, K = map(int, input().split())
-
-cost = 0
-lst = list(map(int, input().split()))
-
-idx = 0
-if N % K:
-    group = N//K + 1
-    while idx + group < N:
-        cost += lst[idx+group-1] - lst[idx]
-        idx += group
-    cost += lst[-1]-lst[idx]
-
-else:
-    group = N//K
-    while idx + group <= N:
-        cost += lst[idx+group-1] - lst[idx]
-        idx += group
-        
-print(cost)
+arr = [list(input()) for _ in range(8)]
+cnt = 0
+for i in range(8):
+    for j in range(8):
+        if i % 2 and j % 2:
+            if arr[i][j] == 'F':
+                cnt += 1
+        elif i % 2 == 0 and j % 2 == 0:
+            if arr[i][j] == 'F':
+                cnt += 1
+print(cnt)
