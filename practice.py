@@ -1,5 +1,4 @@
 import sys
-
 input = sys.stdin.readline
 cnt = 0
 lst = []
@@ -23,8 +22,6 @@ for i in range(N):
     lst.append(a)
 lst.sort()
 max_cnt_num.sort()
-
-
 
 print(round(sum(lst)/N))
 print(lst[N//2])
