@@ -1,37 +1,19 @@
-from collections import deque
 import sys
 input = sys.stdin.readline
 
-def bfs(n):
-    visited = [0] * (N+1)
-    queue = deque()
-    queue.append(n)
-    total = 0
-    visited[n] = 1
+n = int(input())
+meetings = []
+for i in range(n):
+    start, end = map(int, input().split())
+    meetings.append([end, start])
+meetings.sort()
 
-    while queue:
-        start = queue.popleft()
-        for j in FRNS[start]:
-            if not visited[j]:
-                queue.append(j)
-                visited[j] = visited[start] + 1
-                total += visited[j] - 1
-    return total
+standard = meetings[0][0]
+cnt = 1
 
+for j in meetings[1:]:
+    if j[1] >= standard:
+        standard = j[0]
+        cnt += 1
 
-N, M = map(int, input().split())
-FRNS = [[] for _ in range(N+1)]
-for i in range(M):
-    a, b = map(int, input().split())
-    FRNS[a].append(b)
-    FRNS[b].append(a)
-
-print(FRNS)
-
-result = 1e10
-result_no = 1e10
-for j in range(N, 0, -1):
-    if bfs(j) <= result:
-        result = bfs(j)
-        result_no = j
-print(result_no)
+print(cnt)
