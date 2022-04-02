@@ -1,3 +1,6 @@
+__15591 MooTuber (Silver)__
+
+```python
 import sys
 input = sys.stdin.readline
 
@@ -26,3 +29,4 @@ for j in range(Q):
     K, V = map(int, input().split())
     cnt = 0
     print(dfs(V))
+```
