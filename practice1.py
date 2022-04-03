@@ -1,30 +1,32 @@
 import sys
 input = sys.stdin.readline
 
-def checkpaper(y, x, n):
-    global white
-    global blue
-    standard = papers[y][x]
-    if n != 1:
-        for i in range(y, y+n):
-            for j in range(x, x+n):
-                if papers[i][j] != standard:
-                    checkpaper(y, x, n//2)
-                    checkpaper(y+n//2, x+n//2, n//2)
-                    checkpaper(y+n//2, x, n//2)
-                    checkpaper(y, x+n//2, n//2)
-                    return
-    if standard == 1:
-        blue += 1
+def zett(y, x, num):
+    global cnt
+    if num == 1:
+        if y == r and x == c:
+            print(cnt)
+            return
+        else:
+            cnt += 1
+            return
+    if y<=r<y+num//2 and x<=c<x+num//2:
+        zett(y, x, num//2)
         return
-    else:
-        white += 1
+    elif y<=r<y+num//2 and x+num//2<=c<x+num:
+        cnt += (num**2)//4
+        zett(y, x+num//2, num//2)
+        return
+    elif y+num//2<=r<y+num and x<=c<x+num//2:
+        cnt += (num**2)//2
+        zett(y+num//2, x, num//2)
+        return
+    elif y+num//2<=r<y+num and x+num//2<=c<x+num:
+        cnt += (num**2)//4*3
+        zett(y+num//2, x+num//2, num//2)
         return
 
-N = int(input())
-papers = [list(map(int, input().split())) for _ in range(N)]
-blue = 0
-white = 0
-checkpaper(0, 0, N)
-print(white)
-print(blue)
+N, r, c = map(int, input().split())
+n = 2**N
+cnt = 0
+zett(0, 0, n)
