@@ -1,32 +1,37 @@
+from collections import deque
 import sys
 input = sys.stdin.readline
 
-def zett(y, x, num):
-    global cnt
-    if num == 1:
-        if y == r and x == c:
-            print(cnt)
-            return
-        else:
-            cnt += 1
-            return
-    if y<=r<y+num//2 and x<=c<x+num//2:
-        zett(y, x, num//2)
-        return
-    elif y<=r<y+num//2 and x+num//2<=c<x+num:
-        cnt += (num**2)//4
-        zett(y, x+num//2, num//2)
-        return
-    elif y+num//2<=r<y+num and x<=c<x+num//2:
-        cnt += (num**2)//2
-        zett(y+num//2, x, num//2)
-        return
-    elif y+num//2<=r<y+num and x+num//2<=c<x+num:
-        cnt += (num**2)//4*3
-        zett(y+num//2, x+num//2, num//2)
-        return
+n, m = map(int, input().split())
+maps = []
+for _ in range(n):
+    tmp = list(input().rstrip())
+    maps.append(list(map(int, tmp)))
 
-N, r, c = map(int, input().split())
-n = 2**N
-cnt = 0
-zett(0, 0, n)
+dX = [-1, 1, 0, 0]
+dY = [0, 0, -1, 1]
+visited = [[[0] * 2 for _ in range(m)] for _ in range(n)]
+
+def bfs():
+    queue = deque()
+    queue.append([0, 0, 0])
+    visited[0][0][0] = 1
+
+    while queue:
+        x, y, w = queue.popleft()
+        if x == n - 1 and y == m - 1:
+            return visited[x][y][w]
+        for i in range(4):
+            nx = x + dX[i]
+            ny = y + dY[i]
+            if 0 <= nx < n and 0 <= ny < m:
+                # 현재 위치로 이동할 수 있고, 아직 방문하지 않았다면
+                if maps[nx][ny] == 0 and not visited[nx][ny][w]:
+                    visited[nx][ny][w] = visited[x][y][w] + 1
+                    queue.append([nx, ny, w])
+                # 현재 위치가 벽이고, 벽을 아직 부수지 않았다면
+                elif maps[nx][ny] == 1 and w == 0:
+                    visited[nx][ny][w + 1] = visited[x][y][w] + 1
+                    queue.append([nx, ny, w + 1])
+    return -1
+print(bfs())
