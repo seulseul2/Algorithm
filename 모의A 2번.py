@@ -1,6 +1,3 @@
-import sys
-sys.stdin = open('sample_input (3).txt')
-
 def dfs(y, x):
     stack = [[y, x]]
     visited = [[False] * M for _ in range(N)]
