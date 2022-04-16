@@ -1,33 +1,24 @@
-# 재귀문
-def dfs1(v):
-    visited[v] = True
-    print(v)
-    for w in GL[v]:
-        if not visited[w]:
-            dfs1(w)
+import sys
+input = sys.stdin.readline
 
-# 반복문으로
-def dfs2(v):
-    stack = []
-    stack.append(v)
-    visited[v] = True
-    while stack:
-        v = stack.pop(-1)
-        print(v)
-        for w in GL[v]:
-            if not visited[w]:
-                visited[w] = True
-                stack.append(w)
+c_n = int(input())
+crane = list(map(int, input().split()))
+crane.sort(reverse=True)
+box_n = int(input())
+box = list(map(int, input().split()))
+box.sort(reverse=True)
+time = 0
+cnt = 0
 
-lst = [1, 2, 1, 3, 2, 4, 2, 5, 4, 6, 5, 6, 6, 7, 3, 7]
-N = 7
-visited = [False] * (N+1)
-GL = [[] for _ in range(N+1)]
-GA = [[0] * (N+1) for _ in range(N+1)]
-for i in range(0, len(lst), 2):
-    p1 = lst[i]
-    p2 = lst[i+1]
-    GL[p1].append(p2)
-    GL[p2].append(p1)
-    GA[p1][p2] = 1
-    GA[p2][p1] = 1
+if crane[0] < box[0]:
+    print(-1)
+else:
+    while cnt < box_n:
+        for i in range(c_n):
+            if crane[i] >= box[cnt]:
+                cnt += 1
+                if cnt == box_n:
+                    break
+                continue
+        time += 1
+    print(time)

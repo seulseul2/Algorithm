@@ -1,32 +1,27 @@
-import sys
-from collections import deque
-input = sys.stdin.readline
+n = int(input())
 
-dY = [-1, 1, 0, 0]
-dX = [0, 0, -1, 1]
+ans = 0
+row = [0] * n
 
-def bfs(y, x):
-    global maxV
-    queue = deque()
-    queue.append([y, x])
-    visited = [[0] * X for _ in range(Y)]
-    visited[y][x] = 1
-    while queue:
-        cY, cX = queue.popleft()
-        maxV = max(maxV, visited[cY][cX])
-        for k in range(4):
-            nY, nX = cY+dY[k], cX+dX[k]
-            if 0<=nY<Y and 0<=nX<X and not visited[nY][nX] and maps[nY][nX] == 'L':
-                queue.append([nY, nX])
-                visited[nY][nX] = visited[cY][cX] + 1
-    return 0
+def is_promising(x):
+    for i in range(x):
+        if row[x] == row[i] or abs(row[x] - row[i]) == abs(x - i):
+            return False
+    
+    return True
 
-Y, X = map(int, input().split())
-maps = list(input().rstrip() for _ in range(Y))
+def n_queens(x):
+    global ans
+    if x == n:
+        ans += 1
+        return
 
-maxV = 0
-for i in range(Y):
-    for j in range(X):
-        if maps[i][j] == 'L':
-            bfs(i, j)
-print(maxV-1)
+    else:
+        for i in range(n):
+            # [x, i]에 퀸을 놓겠다.
+            row[x] = i
+            if is_promising(x):
+                n_queens(x+1)
+
+n_queens(0)
+print(ans)
