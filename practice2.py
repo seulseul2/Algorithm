@@ -1,32 +1,26 @@
-from collections import deque
 import sys
 input = sys.stdin.readline
 
-def bfs(n):
-    global lst
-    queue = deque()
-    queue.append(n)
-    visited = [0] * (N+1)
-    visited[n] = 1
-    while queue:
-        s = queue.popleft()
-        if visited[s]-1 == K:
-            lst.append(s)
-        for i in route[s]:
-            if not visited[i]:
-                queue.append(i)
-                visited[i] = visited[s] + 1
+N = int(input())
+num = list(map(int, input().split()))
+lst = list(map(int, input().split()))
 
-N, M, K, X = map(int, input().split())
-route = [[] for _ in range(N+1)]
-for i in range(M):
-    a, b = map(int, input().split())
-    route[a].append(b)
-lst = []
-bfs(X)
-if lst:
-    lst.sort()
-    for j in lst:
-        print(j)
-else:
-    print(-1)
+maxV = -1e10
+minV = 1e10
+
+def dfs(depth, total, plus, minus, multiply, divide):
+    global maxV, minV
+    if depth == N:
+        maxV = max(total, maxV)
+        minV = min(total, minV)
+    if plus:
+        dfs(depth+1, total+num[depth], plus-1, minus, multiply, divide)
+    if minus:
+        dfs(depth+1, total-num[depth], plus, minus-1, multiply, divide)
+    if multiply:
+        dfs(depth+1, total*num[depth], plus, minus, multiply-1, divide)
+    if divide:
+        dfs(depth+1, int(total/num[depth]), plus, minus, multiply, divide-1)
+dfs(1, num[0], lst[0], lst[1], lst[2], lst[3])
+print(maxV)
+print(minV)
