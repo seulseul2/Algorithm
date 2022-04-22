@@ -1,16 +1,14 @@
 import heapq
-import sys
-input = sys.stdin.readline
 
-N = int(input())
-card = []
-for i in range(N):
-    heapq.heappush(card, int(input()))
+card = [1, 5, 821, 2, 3209, 3]
 
-total = 0
-for j in range(N-1):
-    x = heapq.heappop(card) + heapq.heappop(card)
-    heapq.heappush(card, x)
-    total += x
+heapq.heapify(card)
+print(card)
 
-print(total)
+max_card = []
+for i in card:
+    heapq.heappush(max_card, (-i, i))
+
+print(max_card)
+max_item = heapq.heappop(max_card)[1]
+print(max_card)
