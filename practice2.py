@@ -1,30 +1,35 @@
-import heapq
+from collections import deque
 import sys
 input = sys.stdin.readline
 
-INF = 1e10
-N, M = map(int, input().split())
-graph = [[] for _ in range(N+1)]
-distance = [INF] * (N+1)
+N, K = map(int, input().split())
+visited = [0] * 100001
+cnt = 0
 
-for i in range(M):
-    a, b, c = map(int, input().split())
-    graph[a].append([b, c])
-    graph[b].append([a, c])
-
-def dijkstra(x):
-    queue = []
-    heapq.heappush(queue, [0, x])
-    distance[x] = 0
+def bfs(x):
+    global cnt
+    standard = 1e10
+    queue = deque()
+    queue.append(x)
+    visited[x] = 1
     while queue:
-        dist, now = heapq.heappop(queue)
-        if distance[now] < dist:
-            continue
-        for i in graph[now]:
-            cost = dist + i[1]
-            if cost < distance[i[0]]:
-                distance[i[0]] = cost
-                heapq.heappush(queue, [cost, i[0]])
+        cur = queue.popleft()
+        for new in [cur-1, cur+1, cur*2]:
+            if 0<=new<=100000:
+                
+                
+                 and not visited[new]:
+                visited[new] = visited[cur] + 1
+                queue.append(new)
+                if new == K:
+                    standard = visited[cur] + 1
+            if new == K and standard == visited[cur] + 1:
+                cnt += 1
+    return standard - 1
 
-dijkstra(1)
-print(distance[-1])
+if N == K:
+    print(0)
+    print(1)
+else:
+    print(bfs(N))
+    print(cnt)

@@ -1,42 +1,13 @@
-const firstName = 'Brandan'
-const lastName = 'Eich'
-const fullName = `${firstName} ${lastName}`
-
-const noArgs = function () {
-    return 0
+const fs = require('fs');
+for (i=0; i<5; i++) {
+    const inputData = fs.readFileSync(0, 'utf8').toString();
+    console.log(inputData)
 }
 
-const twoArgs = function (arg1, arg2) {
-    return [arg1, arg2]
-}
 
-const threeArgs = function(arg1, arg2, arg3) {
-    return [arg1, arg2, arg3]
-}
+const N = parseInt(inputData[0]);
+const B = parseInt(inputData[1]);
 
-threeArgs()
-threeArgs(1)
-threeArgs(1, 2)
-
-const restOpr = function (arg1, arg2, ...restArgs) {
-    return [arg1, arg2, restArgs]
-}
-
-restOpr(1, 2, 3, 4, 5)
-restOpr(1, 2)
-
-
-const spreadOpr = function (arg1, arg2, arg3) {
-    return arg1 + arg2 + arg3
-}
-
-const numbers = [1, 2, 3]
-spreadOpr(...numbers)
-
-
-const arrow1 = function (name) {
-    return `hello, ${name}`
-}
-
-const arrow2 = name =>
-    `hello, ${name}`
+const x = A-1
+const y = (B-1) * A
+console.log(x+y);
