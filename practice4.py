@@ -1,38 +1,13 @@
-import heapq
 import sys
 input = sys.stdin.readline
 
-N, M, X = map(int, input().split())
-INF = int(1e10)
-route = [[] for _ in range(N+1)]
+n = int(input())
+x1 = y1 = 1e10
+top_down = 0
+bottom_up = 0
 
-for i in range(M):
-    a, b, c = map(int, input().split())
-    route[a].append([b, c])
-
-def dijkstra(s):
-    queue = []
-    heapq.heappush(queue, [0, s])
-    distance[s] = 0
-    while queue:
-        dist, now = heapq.heappop(queue)
-        if distance[now] < dist:
-            continue
-        for k in route[now]:
-            cost = dist + k[1]
-            if cost < distance[k[0]]:
-                distance[k[0]] = cost
-                heapq.heappush(queue, [cost, k[0]])
-    return distance
-
-lst = [[]]
-maxT = 0
-
-for l in range(1, N+1):
-    distance = [INF] * (N+1)
-    lst.append(dijkstra(l))
-
-for p in range(1, N+1):
-    maxT = max(maxT, lst[p][X] + lst[X][p])
-
-print(maxT)
+for i in range(n):
+    a, b = map(int, input().split())
+    if a > standard_x and b < standard_y:
+        top_down += 1
+    elif a < 
