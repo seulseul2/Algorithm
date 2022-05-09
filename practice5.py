@@ -1,43 +1,16 @@
-from collections import deque
-import sys
-input = sys.stdin.readline
+n = int(input())
 
-N, M = map(int, input().split())
-maps = [list(map(int, input().split())) for _ in range(N)]
+lst = [1] * 10
+lst[0] = 0
+cnt = 1
 
-dX = [0, 0, -1, 1]
-dY = [-1, 1, 0, 0]
-
-def bfs():
-    global time
-    global ans
-    visited = [[False] * M for _ in range(N)] 
-    q = deque()
-    q.append([0, 0])
-    visited[0][0] = True
-    cnt = 0
-    while q:
-        cY, cX = q.popleft()
-        for i in range(4):
-            nY = cY + dY[i]
-            nX = cX + dX[i]
-            if 0<=nY<N and 0<=nX<M and not visited[nY][nX]:
-                visited[nY][nX] = True
-                if maps[nY][nX] == 0:
-                    q.append([nY, nX])
-                else:
-                    maps[nY][nX] = 0
-                    cnt += 1
-    if cnt == 0:
-        return
-    ans = cnt
-    time += 1
-    bfs()
-
-
-cnt = 0
-time = 0
-ans = 0
-
-bfs()
-print(time, ans, sep='\n')
+while n > cnt:
+    dp = [0] * 10
+    for i in range(10):
+        if i != 0:
+            dp[i-1] = (dp[i-1] + lst[i]) % 1000000000
+        if i != 9:
+            dp[i+1] = (dp[i+1] + lst[i]) % 1000000000
+    lst = dp
+    cnt += 1
+print(sum(lst) % 1000000000)
