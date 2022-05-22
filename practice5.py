@@ -1,15 +1,16 @@
 import sys
 input = sys.stdin.readline
 
-T = int(input())
-for TC in range(T):
-    N = int(input())
-    coins = list(map(int, input().split()))
-    value = int(input())
-    dp = [0 for _ in range(value+1)]
-    dp[0] = 1
-    for coin in coins:
-        for i in range(1, value+1):
-            if i - coin >= 0:
-                dp[i] += dp[i-coin]
-    print(dp[value])
+N, M = map(int, input().split())
+lst = list(map(int, input().split()))
+
+ans = 0
+for i in range(N):
+    sumV = 0
+    while sumV < M and i < N:
+        sumV += lst[i]
+        if sumV == M:
+            ans += 1
+            break
+        i += 1
+print(ans)
