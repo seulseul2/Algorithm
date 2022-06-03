@@ -13,35 +13,26 @@ for i in range(N):
     flowers.append([start, end])
 flowers.sort()
 
-end_day = 59
+end_day = 60
 cnt = 0
-maxV = 0
-flag = 1
-# 시작점 = 60보다 작은 애중에 제일 큰애
-# 그 다음 => 제일 큰애+1 보다 작은애중에 제일 큰애
-tmp = []
-
+tmp = 0
 
 for flower in flowers:
-    if flower[0] <= end_day+1:
-        tmp.append(flower[1])
-    else:
-        if tmp:
+    if flower[0] > end_day:
+        if tmp and flower[0] - tmp <= 0:
             cnt += 1
-            end_day = max(tmp)
-            if end_day >= 334:
-                tmp = []
+            end_day = tmp
+            tmp = 0
+            if end_day > 334:
                 break
-            tmp = []
-            if flower[1] > end_day:
-                tmp.append(flower[1])
         else:
             cnt = 0
-            flag = 0
             break
-if tmp:
-    if max(tmp) >= 334:
+    tmp = max(tmp, flower[1])
+else:
+    if tmp:
         cnt += 1
-    else:
-        cnt = 0
+        if tmp <= 334:
+            cnt = 0
+
 print(cnt)
