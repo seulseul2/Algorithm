@@ -1,40 +1,38 @@
 import sys
 input = sys.stdin.readline
-
-N, M = map(int, input().split())
-maps = [list(map(int, input().split())) for _ in range(N)]
-maxV = 0
-
-for i in range(N):
-    for j in range(M):
-        x = maps[i][j]
-        
-        # 1자
-        if j+3<M:
-            maxV = max(maxV, x+maps[i][j+1]+maps[i][j+2]+maps[i][j+3])
-        if i+3<N:
-            maxV = max(maxV, x+maps[i+1][j]+maps[i+2][j]+maps[i+3][j])
-
-        # 네모
-        if i+1<N and j+1<M:
-            maxV = max(maxV, x+maps[i+1][j]+maps[i][j+1]+maps[i+1][j+1])
-        
-        # 산모양 & 하나빼꼼
-        if i+2<N:
-            if 0<j:
-                maxV = max(maxV, x+maps[i+1][j]+maps[i+2][j]+max(maps[i+1][j-1], maps[i][j-1], maps[i+2][j-1]))
-            if j<N-1:
-                maxV = max(maxV, x+maps[i+1][j]+maps[i+2][j]+max(maps[i+1][j+1], maps[i][j+1], maps[i+2][j+1]))
-        if i+1<N and 0<j<M-1:
-            maxV = max(maxV, max(x, maps[i][j-1], maps[i][j+1])+maps[i+1][j]+maps[i+1][j-1]+maps[i+1][j+1])
-            maxV = max(maxV, x+maps[i][j-1]+maps[i][j+1]+max(maps[i+1][j], maps[i+1][j-1], maps[i+1][j+1]))
-        
-        # 지렁이 모양
-        if 0<j<M-1 and i<N-1:
-            tmp = x+maps[i+1][j]
-            maxV = max(maxV, tmp+max(maps[i][j-1]+maps[i+1][j+1], maps[i][j+1]+maps[i+1][j-1]))
-        if j<M-1 and 0<i<N-1:
-            tmp = x+maps[i][j+1]
-            maxV = max(maxV, tmp+max(maps[i-1][j]+maps[i+1][j+1], maps[i+1][j]+maps[i-1][j+1]))
-
-print(maxV)
+N = int(input())
+strN = str(N)
+M = int(input())
+if M:
+    broken = list(input().split())
+    # 1. 100번에서 +나 -를 눌러서 가는 방법
+    minV = abs(N-100)
+    if minV <= len(strN) or M == 10:
+        print(minV)
+    else:
+        # 가장 가까운 수를 구한 다음, 더해서 가는 방법
+        cnt = 0
+        while 1:
+            cnt += 1
+            intA = N + cnt
+            strA = str(intA)
+            for number in broken:
+                if number in strA:
+                    break
+            else:
+                standard = intA
+            intB = N - cnt
+            if intB < 0:
+                continue
+            strB = str(intB)
+            for number in broken:
+                if number in strB:
+                    break
+            else:
+                if len(strB) < len(strA):
+                    standard = intB
+            if standard:
+                break
+        print(min(minV, len(str(standard))+abs(standard-N)))
+else:
+    print(min(len(strN), abs(N-100)))

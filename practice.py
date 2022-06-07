@@ -1,8 +1,19 @@
-alphabet = {'a':0, 'b':0, 'c':0, 'd':0, 'e':0, 'f':0, 'g':0, 'h':0, 'i':0, 'j':0, 'k':0, 'l':0, 'm':0, 'n':0, 'o':0, 'p':0, 'q':0, 'r':0, 's':0, 't':0, 'u':0, 'v':0, 'w':0, 'x':0, 'y':0, 'z':0}
+import sys
+input = sys.stdin.readline
 
-x = input()
-for i in x:
-    alphabet[i] += 1
+N = int(input())
+minV = abs(100-N)
+M = int(input())
+if M:
+    broken = list(input().split())
+else:
+    broken = []
 
-for j in alphabet.values():
-    print(j, end=' ')
+for num in range(1000001):
+    for tmp in str(num):
+        if tmp in broken:
+            break
+    else:
+        minV = min(minV, len(str(num))+abs(num-N))
+print(num)
+print(minV)
