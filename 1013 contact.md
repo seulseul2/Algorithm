@@ -1,3 +1,6 @@
+__1013 contact__
+
+```python
 import re
 T = int(input())
 for TC in range(T):
@@ -7,3 +10,5 @@ for TC in range(T):
         print('YES')
     else:
         print('NO')
+```
+
