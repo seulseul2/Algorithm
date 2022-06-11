@@ -1,9 +1,15 @@
-import re
-T = int(input())
-for TC in range(T):
-    word = input()
-    x = re.compile('(100+1+|01)+')
-    if x.fullmatch(word):
-        print('YES')
-    else:
-        print('NO')
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+lst = list(map(int, input().split()))
+dp = [0]
+
+tmp = 0
+for i in lst:
+    tmp += i
+    dp.append(tmp)
+
+for i in range(M):
+    start, end = map(int, input().split())
+    print(dp[end] - dp[start-1])
