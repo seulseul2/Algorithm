@@ -1,15 +1,16 @@
 import sys
 input = sys.stdin.readline
 
-N, M = map(int, input().split())
-lst = list(map(int, input().split()))
-dp = [0]
+N = int(input())
+maps = []
+for i in range(N):
+    maps.append(list(map(int, input().split())))
 
-tmp = 0
-for i in lst:
-    tmp += i
-    dp.append(tmp)
+for i in range(N):
+    for j in range(N):
+        for k in range(N):
+            if maps[j][k]==1 or (maps[j][i]==1 and maps[i][k]==1):
+                maps[j][k] = 1
 
-for i in range(M):
-    start, end = map(int, input().split())
-    print(dp[end] - dp[start-1])
+for row in maps:
+    print(*row)
