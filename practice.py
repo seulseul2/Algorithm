@@ -1,16 +1,14 @@
 import sys
 input = sys.stdin.readline
 
-N = int(input())
-maps = []
-for i in range(N):
-    maps.append(list(map(int, input().split())))
+n = int(input())
+dp = [0, 1]
 
-for i in range(N):
-    for j in range(N):
-        for k in range(N):
-            if maps[j][k]==1 or (maps[j][i]==1 and maps[i][k]==1):
-                maps[j][k] = 1
-
-for row in maps:
-    print(*row)
+for i in range(2, n+1):
+    minV = int(1e9)
+    j = 1
+    while j**2 <= i:
+        minV = min(minV, dp[i-j**2])
+        j += 1
+    dp.append(minV+1)
+print(dp[n])
