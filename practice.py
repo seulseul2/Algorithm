@@ -1,20 +1,37 @@
-TC = 0
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+tmp = list(map(int, input().split()))
+dict = {}
+for i in tmp[1:]:
+    dict[i] = 1
+
+parties = []
+
+for i in range(M):
+    party = list(map(int, input().split()))
+    for person in party[1:]:
+        if person in dict.keys():
+            for tmp in party[1:]:
+                if tmp not in dict.keys():
+                    dict[tmp] = 1
+            break
+    else:
+        parties.append(party)
+
 while 1:
-    TC += 1
-    tmp = input()
-    if '-' in tmp:
+    flag = 1
+    for party in parties:
+        for person in party[1:]:
+            if person in dict.keys():
+                for tmp in party[1:]:
+                    if tmp not in dict.keys():
+                        dict[tmp] = 1
+                parties.remove(party)
+                flag = 0
+                break
+    if flag:
         break
-    ans = 0
-    stack = 0
-    for char in tmp:
-        if char == '{':
-            stack += 1
-        else:
-            if stack:
-                stack -= 1
-            else:
-                ans += 1
-                stack += 1
-    if stack:
-        ans += stack//2
-    print('{}. {}' .format(TC, ans))
+
+print(len(parties))
