@@ -1,26 +1,26 @@
-import sys
+import sys, heapq
 input = sys.stdin.readline
 
-L, C = map(int, input().split())
-alphabet = list(input().rstrip().split())
-alphabet.sort()
-word = []
-vowels = ['a', 'e', 'i', 'o', 'u']
+N, M = map(int, input().split())
+arr = [[] for _ in range(N+1)]
+dist = [2147483647 for _ in range(N+1)]
+dp = [0 for _ in range(N+1)]
 
-def btrk(D):
-    if len(word) == L:
-        vowel = 0
-        consonant = 0
-        for char in word:
-            if char in vowels:
-                vowel += 1
-            else:
-                consonant += 1
-            if vowel>0 and consonant>1:
-                print(''.join(word))
-                return
-    for i in range(D, C):
-        word.append(alphabet[i])
-        btrk(i+1)
-        word.pop()
-btrk(0)
+for _ in range(M):
+    A, B, C = map(int, input().split())
+    arr[A].append([B, C])
+    arr[B].append([A, C])
+
+H, dist[2], dp[2] = [[0, 2]], 0, 1
+while H:
+    curD, now = heapq.heappop(H)
+    if curD > dist[now]:
+        continue
+    for next, newD in arr[now]:
+        cost = newD + curD
+        if cost < dist[next]:
+            dist[next] = cost
+            heapq.heappush(H, [cost, next])
+        if curD > dist[next]:
+            dp[now] += dp[next]
+print(dp[1])
